@@ -8,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class ServerComponent implements OnInit {
   server = 'A';
   serverId = 10;
-  serverStatus = true;
+  serverStatus = 'offline';
   getServerStatus() {
     return this.serverStatus;
   }
-  constructor() { }
+  constructor() {
+    this.serverStatus = Math.random() > 0.5 ? 'online' : 'offline';
+  }
 
   ngOnInit() {
   }
