@@ -9,9 +9,15 @@ export class ServerComponent implements OnInit {
   server = 'A';
   serverId = 10;
   serverStatus = 'offline';
+
   getServerStatus() {
     return this.serverStatus;
   }
+
+  getColor() {
+    return this.serverStatus === 'online' ? 'green':'red';
+  }
+
   constructor() {
     this.serverStatus = Math.random() > 0.5 ? 'online' : 'offline';
   }
