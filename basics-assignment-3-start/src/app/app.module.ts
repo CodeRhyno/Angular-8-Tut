@@ -4,10 +4,16 @@ import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
+import { AsgSolutionComponent } from './asg-solution/asg-solution.component';
+import { ConsoleComponent } from './console/console.component';
+import { LogComponent } from './log/log.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AsgSolutionComponent,
+    ConsoleComponent,
+    LogComponent
   ],
   imports: [
     BrowserModule,
