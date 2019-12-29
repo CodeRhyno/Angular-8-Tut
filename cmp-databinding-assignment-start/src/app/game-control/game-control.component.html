@@ -1,0 +1,8 @@
+<h3>Controls</h3>
+
+<div class="col-md-6">
+    <app-start-game [visibility]='startControlVisibility' (visibilityOutputStart)="changeVisibility($event)"></app-start-game>
+</div>
+<div class="col-md-6">
+    <app-stop-game [visibility]='!startControlVisibility' (visibilityOutputStop)="changeVisibility($event)"></app-stop-game>
+</div>
