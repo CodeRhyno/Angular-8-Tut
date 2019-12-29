@@ -19,9 +19,15 @@
 <div class="container">
   <div class="row">
     <h1>Welcome to My Game!</h1>
-    <app-game-control></app-game-control>
+    <app-game-control (scoreNumber)="scoreChanged($event)"></app-game-control>
   </div>
   <div class="row">
-    <app-score></app-score>
+    <h3>Score</h3>
+    <div class="col-md-6">
+      <app-even-score *ngFor="let score of evenScores" [score]="score"></app-even-score>
+    </div>
+    <div class="col-md-6">
+      <app-odd-score *ngFor="let score of oddScores" [score]="score"></app-odd-score>
+    <div class="col-md-6"></div>
   </div>
 </div>

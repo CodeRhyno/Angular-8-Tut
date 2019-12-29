@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-even-score',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./even-score.component.css']
 })
 export class EvenScoreComponent implements OnInit {
-
+  @Input() score: number;
+  
   constructor() { }
 
   ngOnInit() {

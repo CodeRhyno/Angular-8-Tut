@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-game-control',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameControlComponent implements OnInit {
   startControlVisibility: boolean = false;
+  @Output() scoreNumber = new EventEmitter<number>();
+  timer;
+  score: number = 0;
 
   constructor() { }
 
@@ -14,7 +17,16 @@ export class GameControlComponent implements OnInit {
   }
 
   changeVisibility(visibilityChange: {visibility: boolean}) {
+    if (visibilityChange.visibility) {
+      this.timer = setInterval(() => {
+        this.scoreNumber.emit(this.score);
+        console.log("Emitted: " + this.score);
+        this.score += 1;
+      }, 1000);
+    }
+    else {
+      clearInterval(this.timer);
+    }
     this.startControlVisibility = visibilityChange.visibility;
   }
-
 }
