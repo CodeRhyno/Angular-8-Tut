@@ -6,7 +6,7 @@ import { AccountsService } from './accounts.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [AccountsService]
+  providers: []
 })
 export class AppComponent {
   accounts: {
