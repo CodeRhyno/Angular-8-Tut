@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from './recipe.model';
 import { RecipeService } from './recipe.service';
+import { Ingredient } from '../shared/ingredient.model';
 
 @Component({
   selector: 'app-recipes',
@@ -21,7 +22,7 @@ export class RecipesComponent implements OnInit {
     );
   }
 
-  recipeFromList(recipe: {name: string, description: string, imagePath: string}) {
+  recipeFromList(recipe: {name: string, description: string, imagePath: string, ingredients: Ingredient[]}) {
     this.recipeElement = recipe;
   }
 
