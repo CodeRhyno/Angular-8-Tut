@@ -4,19 +4,20 @@
         <div ngModelGroup="userData">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" ngModel name="email" required>
-                <p *ngIf="signupForm.invalid">Email you entered is invalid!</p>
-                <button class="btn btn-success" (click)="suggestEmail()">Suggest email</button>
+                <input type="email" class="form-control" ngModel name="email" #emailElement="ngModel" required email>
+                <p *ngIf="emailElement.invalid && emailElement.touched">Email you entered is invalid!</p>
+                <br>
+                <button class="btn btn-success" type="button" (click)="suggestEmail()">Suggest email</button>
                 <br>
                 <label for="subType">Subscription type:</label>
                 <select type="text" class="form-control" ngModel name="subType" required>
                     <option *ngFor="let sub of subscriptions" [value]="sub.id">{{ sub.name }}</option>
                 </select>
                 <label for="password">Password: </label>
-                <input type="password" class="form-control" ngModel name="password" required>
-                <label for="passwordConfirmation">Password Confirmation: </label>
-                <input type="password" class="form-control" ngModel name="passwordConfirmation" required>
+                <input type="password" class="form-control" ngModel name="password" #passwordElement="ngModel" required>
+                <p *ngIf="passwordElement.invalid && passwordElement.touched">Password can't be empty</p>
             </div>
+            <p *ngIf="formElement.invalid && formElement.touched">User details are invalid</p>
             <button class="btn btn-primary" [disabled]="signupForm.invalid">Submit</button>
         </div>
     </form>
