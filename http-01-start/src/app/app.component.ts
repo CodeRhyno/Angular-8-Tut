@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { Post } from './post.model';
+import { PostsService } from './posts.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,10 @@ import { Post } from './post.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  loadedPosts = [];
+  loadedPosts: Post[] = [];
+  isFetching = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private postsService: PostsService) {}
 
   ngOnInit() {
     this.fetchPosts();
@@ -20,17 +22,16 @@ export class AppComponent implements OnInit {
 
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
-    this.http.post<{name: string}>(
-      'https://ng-complete-guide-c5498.firebaseio.com/posts.json', 
-      postData
-    ).subscribe(responseData => {
-      console.log(responseData);
-    });
+    this.postsService.createAndStorePost(postData.title, postData.content);
   }
 
   onFetchPosts() {
     // Send Http request
-    this.fetchPosts();
+    this.isFetching = true;
+    this.postsService.fetchPosts().subscribe(posts => {
+      this.isFetching = false;
+      this.loadedPosts = posts;
+    });
   }
 
   onClearPosts() {
@@ -38,20 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   private fetchPosts() {
-    this.http.get<{[key: string]: Post}>(
-      'https://ng-complete-guide-c5498.firebaseio.com/posts.json'
-    )
-    .pipe(map(responseData => {
-      const postsArrays: Post[] = [];
-      for (const key in responseData) {
-        if (responseData.hasOwnProperty(key)) {
-          postsArrays.push({ ...responseData[key], id: key });
-        }
-      }
-      return postsArrays;
-    }))
-    .subscribe(posts => {
-      console.log(posts);
-    });
+    this.isFetching = true;
+    
   }
 }
