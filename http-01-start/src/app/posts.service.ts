@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
 
 import { Post } from './post.model';
 
@@ -25,8 +25,17 @@ export class PostsService {
     }
 
     fetchPosts() {
+        let searchParams = new HttpParams();
+        searchParams = searchParams.append('print', 'pretty');
+        searchParams = searchParams.append('custom', 'key');
         return this.http.get<{[key: string]: Post}>(
-            'https://ng-complete-guide-c5498.firebaseio.com/posts.json'
+            'https://ng-complete-guide-c5498.firebaseio.com/posts.json',
+            {
+                headers: new HttpHeaders({
+                    'Custom-header': 'Hello'
+                }),
+                params: searchParams
+            }
         )
         .pipe(
             map(responseData => {
@@ -37,6 +46,10 @@ export class PostsService {
                 }
               }
               return postsArrays;
+            }),
+            catchError(errorRes => {
+                // Send to analytics server
+                return throwError(errorRes);
             })
         )
     }
