@@ -1,11 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { Post } from './post.model';
 
 @Injectable({providedIn: 'root'})
 export class PostsService {
+    error = new Subject<string>();
 
     constructor(private http: HttpClient) { }
 
@@ -17,6 +19,8 @@ export class PostsService {
         )
         .subscribe(responseData => {
             console.log(responseData);
+        }, error => {
+            this.error.next(error.message);
         });
     }
 
@@ -35,5 +39,9 @@ export class PostsService {
               return postsArrays;
             })
         )
+    }
+
+    deletePosts() {
+        return this.http.delete('https://ng-complete-guide-c5498.firebaseio.com/posts.json');
     }
 }
