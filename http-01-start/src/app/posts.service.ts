@@ -15,7 +15,10 @@ export class PostsService {
         const postData: Post = { title: title, content: content };
         this.http.post<{name: string}>(
             'https://ng-complete-guide-c5498.firebaseio.com/posts.json', 
-            postData
+            postData, 
+            {
+                observe: 'response'
+            }
         )
         .subscribe(responseData => {
             console.log(responseData);
@@ -55,6 +58,15 @@ export class PostsService {
     }
 
     deletePosts() {
-        return this.http.delete('https://ng-complete-guide-c5498.firebaseio.com/posts.json');
+        return this.http.delete(
+            'https://ng-complete-guide-c5498.firebaseio.com/posts.json',
+            {
+                observe: 'events'
+            }
+        ).pipe(
+            tap(event => {
+                console.log(event);
+            })
+        );
     }
 }
